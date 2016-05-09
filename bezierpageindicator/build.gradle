@@ -1,14 +1,19 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.ayibang.common'
+version = '1.0.0-SNAPSHOT'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.3"
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -24,4 +29,21 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
 }
 
-apply from: 'https://raw.githubusercontent.com/ChrisCheng4j/LibPublisher/master/bintrayUpload.gradle'
+artifactory {
+    contextUrl = 'http://10.170.177.115:8081/artifactory'
+    publish {
+        repository {
+            repoKey = version.contains("SNAPSHOT") ? "libs-snapshot-local/ " : "libs-release-local"
+            // The Artifactory repository key to publish to
+            username = "ayibang" // The publisher user name
+            password = "ayibang" // The publisher password
+        }
+        defaults {
+            publishConfigs('archives', 'published')
+            properties = ['build.status': "$it.project.status".toString()]
+            publishPom = true //Publish generated POM files to Artifactory (true by default)
+            publishIvy = false
+            //Publish generated Ivy descriptor files to Artifactory (true by default)
+        }
+    }
+}
