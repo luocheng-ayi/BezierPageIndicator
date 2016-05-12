@@ -199,25 +199,25 @@ public class CirclePageIndicator extends View implements IPageIndicator {
     private void initAttrs(Context context, AttributeSet attrs) {
         Resources res = context.getResources();
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator);
-        mOrientation = a.getInt(R.styleable.CirclePageIndicator_android_orientation,
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BezierCirclePageIndicator);
+        mOrientation = a.getInt(R.styleable.BezierCirclePageIndicator_android_orientation,
                 res.getInteger(R.integer.default_circle_orientation));
-        mRadius = a.getDimension(R.styleable.CirclePageIndicator_bpi_circle_radius,
+        mRadius = a.getDimension(R.styleable.BezierCirclePageIndicator_bpi_circle_radius,
                 res.getDimension(R.dimen.default_circle_radius));
-        mSpacing = a.getDimension(R.styleable.CirclePageIndicator_bpi_circle_spacing,
+        mSpacing = a.getDimension(R.styleable.BezierCirclePageIndicator_bpi_circle_spacing,
                 res.getDimension(R.dimen.default_circle_spacing));
-        mNormalPaint.setColor(a.getColor(R.styleable.CirclePageIndicator_bpi_circle_normalColor,
+        mNormalPaint.setColor(a.getColor(R.styleable.BezierCirclePageIndicator_bpi_circle_normalColor,
                 res.getColor(R.color.default_circle_normal_color)));
-        mSelectedPaint.setColor(a.getColor(R.styleable.CirclePageIndicator_bpi_circle_selectedColor,
+        mSelectedPaint.setColor(a.getColor(R.styleable.BezierCirclePageIndicator_bpi_circle_selectedColor,
                 res.getColor(R.color.default_circle_selected_color)));
-        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        Drawable background = a.getDrawable(R.styleable.BezierCirclePageIndicator_android_background);
         if (background != null)
             setBackgroundDrawable(background);
-        mCount = a.getInteger(R.styleable.CirclePageIndicator_bpi_circle_count,
+        mCount = a.getInteger(R.styleable.BezierCirclePageIndicator_bpi_circle_count,
                 res.getInteger(R.integer.default_circle_count));
-        mSlideable = a.getBoolean(R.styleable.CirclePageIndicator_bpi_circle_slideable,
+        mSlideable = a.getBoolean(R.styleable.BezierCirclePageIndicator_bpi_circle_slideable,
                 res.getBoolean(R.bool.default_circle_slideable));
-        mSingleShow = a.getBoolean(R.styleable.CirclePageIndicator_bpi_circle_single_show,
+        mSingleShow = a.getBoolean(R.styleable.BezierCirclePageIndicator_bpi_circle_single_show,
                 res.getBoolean(R.bool.default_circle_single_show));
 
         a.recycle();
