@@ -10,5 +10,7 @@
         <attr name="bpi_circle_count" format="integer" />
         <attr name="bpi_circle_slideable" format="boolean" />
         <attr name="bpi_circle_single_show" format="boolean" />
+        <attr name="bpi_circle_stroke_width" format="dimension" />
+        <attr name="bpi_circle_stroke_color" format="color" />
     </declare-styleable>
 </resources>

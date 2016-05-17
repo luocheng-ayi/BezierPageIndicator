@@ -26,6 +26,7 @@ public class CirclePageIndicator extends View implements IPageIndicator {
 
     private Paint mNormalPaint;
     private Paint mSelectedPaint;
+    private Paint mStrokePaint;
 
     private int mCurrentPosition;
     private float mPositionOffset;
@@ -99,6 +100,21 @@ public class CirclePageIndicator extends View implements IPageIndicator {
         invalidate();
     }
 
+    public void setStrokeColor(int color) {
+        mStrokePaint.setColor(color);
+        invalidate();
+    }
+
+    public void setStrokeWidth(float strokeWidth) {
+        mStrokePaint.setStrokeWidth(strokeWidth);
+        invalidate();
+    }
+
+    public void setStrokeWidth(int strokeWidthPx) {
+        mStrokePaint.setStrokeWidth(strokeWidthPx);
+        invalidate();
+    }
+
     public void setSlideable(boolean slideable) {
         mSlideable = slideable;
     }
@@ -138,6 +154,10 @@ public class CirclePageIndicator extends View implements IPageIndicator {
         float cx;
         float cy;
 
+        float normalRadius = mRadius;
+        if (mStrokePaint.getStrokeWidth() > 0)
+            normalRadius -= mStrokePaint.getStrokeWidth() / 2.0f;
+
         for (int i = 0; i < mCount; i++) {
             float longStart = longOffset + (mRadius * 2 + mSpacing) * i;
 
@@ -150,7 +170,10 @@ public class CirclePageIndicator extends View implements IPageIndicator {
             }
 
             if (mNormalPaint.getAlpha() > 0)
-                canvas.drawCircle(cx, cy, mRadius, mNormalPaint);
+                canvas.drawCircle(cx, cy, normalRadius, mNormalPaint);
+
+            if (normalRadius != mRadius)
+                canvas.drawCircle(cx, cy, mRadius, mStrokePaint);
         }
 
         if (mOrientation == LinearLayout.HORIZONTAL) {
@@ -194,6 +217,9 @@ public class CirclePageIndicator extends View implements IPageIndicator {
 
         mSelectedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mSelectedPaint.setStyle(Paint.Style.FILL);
+
+        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mStrokePaint.setStyle(Paint.Style.STROKE);
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -210,6 +236,10 @@ public class CirclePageIndicator extends View implements IPageIndicator {
                 res.getColor(R.color.default_circle_normal_color)));
         mSelectedPaint.setColor(a.getColor(R.styleable.BezierCirclePageIndicator_bpi_circle_selectedColor,
                 res.getColor(R.color.default_circle_selected_color)));
+        mStrokePaint.setColor(a.getColor(R.styleable.BezierCirclePageIndicator_bpi_circle_stroke_color,
+                res.getColor(R.color.default_circle_stroke_color)));
+        mStrokePaint.setStrokeWidth(a.getDimension(R.styleable.BezierCirclePageIndicator_bpi_circle_stroke_width,
+                res.getDimension(R.dimen.default_circle_stroke_width)));
         Drawable background = a.getDrawable(R.styleable.BezierCirclePageIndicator_android_background);
         if (background != null)
             setBackgroundDrawable(background);
@@ -232,7 +262,7 @@ public class CirclePageIndicator extends View implements IPageIndicator {
         if (specMode == MeasureSpec.EXACTLY)
             result = specSize;
         else {
-            result = (int) (getPaddingLeft() + mRadius * 2 * mCount + mSpacing * (mCount - 1) + getPaddingRight());
+            result = (int) (getPaddingLeft() + mRadius * 2 * mCount + mSpacing * (mCount - 1) + getPaddingRight() + 1);
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
@@ -250,7 +280,7 @@ public class CirclePageIndicator extends View implements IPageIndicator {
         if (specMode == MeasureSpec.EXACTLY)
             result = specSize;
         else {
-            result = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom());
+            result = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom() + 1);
             if (specMode == MeasureSpec.AT_MOST)
                 result = Math.min(result, specSize);
         }

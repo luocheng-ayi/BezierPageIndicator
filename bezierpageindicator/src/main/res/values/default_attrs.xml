@@ -8,4 +8,6 @@
     <integer name="default_circle_count">0</integer>
     <bool name="default_circle_slideable">true</bool>
     <bool name="default_circle_single_show">false</bool>
+    <dimen name="default_circle_stroke_width">0dp</dimen>
+    <color name="default_circle_stroke_color">#ffffffff</color>
 </resources>
