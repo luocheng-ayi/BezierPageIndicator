@@ -153,10 +153,13 @@ public class CirclePageIndicator extends View implements IPageIndicator {
 
         float cx;
         float cy;
-
         float normalRadius = mRadius;
-        if (mStrokePaint.getStrokeWidth() > 0)
-            normalRadius -= mStrokePaint.getStrokeWidth() / 2.0f;
+        float strokeRadius = mRadius;
+
+        if (mStrokePaint.getStrokeWidth() > 0) {
+            normalRadius -= mStrokePaint.getStrokeWidth();
+            strokeRadius -= mStrokePaint.getStrokeWidth() / 2.0f;
+        }
 
         for (int i = 0; i < mCount; i++) {
             float longStart = longOffset + (mRadius * 2 + mSpacing) * i;
@@ -173,7 +176,7 @@ public class CirclePageIndicator extends View implements IPageIndicator {
                 canvas.drawCircle(cx, cy, normalRadius, mNormalPaint);
 
             if (normalRadius != mRadius)
-                canvas.drawCircle(cx, cy, mRadius, mStrokePaint);
+                canvas.drawCircle(cx, cy, strokeRadius, mStrokePaint);
         }
 
         if (mOrientation == LinearLayout.HORIZONTAL) {
@@ -263,9 +266,8 @@ public class CirclePageIndicator extends View implements IPageIndicator {
             result = specSize;
         else {
             result = (int) (getPaddingLeft() + mRadius * 2 * mCount + mSpacing * (mCount - 1) + getPaddingRight() + 1);
-            if (specMode == MeasureSpec.AT_MOST) {
+            if (specMode == MeasureSpec.AT_MOST)
                 result = Math.min(result, specSize);
-            }
         }
 
         return result;

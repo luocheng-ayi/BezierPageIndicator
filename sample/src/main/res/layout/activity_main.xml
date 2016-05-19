@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/vp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="6dp"
+        app:bpi_circle_normalColor="@android:color/transparent"
+        app:bpi_circle_selectedColor="@android:color/white"
+        app:bpi_circle_stroke_color="@android:color/white"
+        app:bpi_circle_stroke_width="1px" />
 
 </RelativeLayout>
